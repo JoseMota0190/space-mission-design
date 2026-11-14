@@ -192,14 +192,20 @@ $("#rep").scrollIntoView({behavior:"smooth"})}
 
 const wpost=(o)=>fetch(CFG.WORKER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(o)}).then(r=>r.json());
 const loc=()=>{try{return JSON.parse(localStorage.getItem("runs")||"[]")}catch(e){return[]}};
+const mine=()=>{try{return JSON.parse(localStorage.getItem("mine")||"[]")}catch(e){return[]}};
+const rowKey=r=>r.name+"|"+JSON.stringify(r.design);
 async function publish(){const name=$("#nm").value.trim().slice(0,20);if(!name)return;
 const design=clean(S);
-try{if(CFG.WORKER){const r=await wpost({op:"publish",day:DAY,sc:S.sc,name,design});if(r&&r.error)throw new Error(r.error)}else localStorage.setItem("runs",JSON.stringify([...loc(),{day:DAY,sc:S.sc,name,kind:"human",design}]))}catch(e){}
+try{if(CFG.WORKER){const r=await wpost({op:"publish",day:DAY,sc:S.sc,name,design});if(r&&r.error)throw new Error(r.error);
+localStorage.setItem("mine",JSON.stringify([...mine().filter(x=>!(x.day===DAY&&x.sc===S.sc&&x.name===name)),{day:DAY,sc:S.sc,name,design}]))}
+else localStorage.setItem("runs",JSON.stringify([...loc(),{day:DAY,sc:S.sc,name,kind:"human",design}]))}catch(e){}
 $("#pub").disabled=true;board()}
 async function board(){let rows=[];
 try{if(CFG.WORKER){const r=await wpost({op:"rank",day:DAY,sc:S.sc});rows=Array.isArray(r.rows)?r.rows:[]}else rows=loc().filter(r=>r.day===DAY&&r.sc===S.sc)}catch(e){}
-const t=rows.map(r=>({n:r.name,s:ev(r.design,DAY*10+S.sc).score})).sort((a,b)=>b.s-a.s).slice(0,15);
-$("#lb").innerHTML=`<h3>Ranking de hoy: ${SC[S.sc].n}</h3>`+(t.length?`<table>${t.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.n)}</td><td>${x.s}</td></tr>`).join("")}</table>`:"<p>Nadie ha publicado todavía. Sé la primera persona.</p>")+(CFG.WORKER?"":`<p class="why">Ranking local: despliega el Worker para compartirlo.</p>`)}
+let pend=false;
+if(CFG.WORKER){const seen=new Set(rows.map(rowKey));for(const m of mine())if(m.day===DAY&&m.sc===S.sc&&!seen.has(rowKey(m))){rows.push({name:m.name,design:m.design,mine:true});pend=true}}
+const t=rows.map(r=>({n:r.name,s:ev(r.design,DAY*10+S.sc).score,me:r.mine})).sort((a,b)=>b.s-a.s).slice(0,15);
+$("#lb").innerHTML=`<h3>Ranking de hoy: ${SC[S.sc].n}</h3>`+(t.length?`<table>${t.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.n)}${x.me?" (tú)":""}</td><td>${x.s}</td></tr>`).join("")}</table>`:"<p>Nadie ha publicado todavía. Sé la primera persona.</p>")+(pend?`<p class="why">Tu resultado ya quedó guardado. La lista compartida puede tardar hasta un minuto en mostrarlo a los demás.</p>`:"")+(CFG.WORKER?"":`<p class="why">Ranking local: despliega el Worker para compartirlo.</p>`)}
 
 const RIV=[["local","Optimizador local (sin red)"],["groq-gptoss","gpt-oss 120B"],["groq-qwen","Qwen3.8 27B"],["groq-gptoss20","gpt-oss 20B"]];
 const rnd=n=>Math.floor(Math.random()*n);
