@@ -50,14 +50,14 @@ en el repositorio (rama `main`, carpeta raíz).
    Cloudflare toma `wrangler.toml` y publica `worker.js`.
 3. Cargá el secreto **`GROQ_KEY`** con tu clave de Groq.
 4. Agregá el enlace KV: variable **`RANKS`** → namespace `ranking-misiones`.
-5. Copiá la URL del Worker (algo como `https://mision-espacial.<usuario>.workers.dev`).
+5. Copiá la URL del Worker (algo como `https://space-mission-design.<usuario>.workers.dev`).
 
 ### 3. Conectar el juego con el Worker
 
 Pegá esa URL en `index.html`, en la línea:
 
 ```js
-const CFG={WORKER:"https://mision-espacial.<usuario>.workers.dev"};
+const CFG={WORKER:"https://space-mission-design.<usuario>.workers.dev"};
 ```
 
 Guardá, subí el cambio y listo: el ranking y los rivales de IA quedan compartidos.

@@ -33,7 +33,7 @@ https://JoseMota0190.github.io/space-mission-design/
 
 1. En **Workers & Pages** → **Create** → **Connect to Git** (Conectar con Git).
 2. Autorizá GitHub si te lo pide y elegí el repositorio **`space-mission-design`**.
-3. Nombre del Worker: **`mision-espacial`**.
+3. Nombre del Worker: **`space-mission-design`**.
 4. Si te pide el **comando de despliegue**, escribí: `npx wrangler deploy`.
 5. **Deploy**.
 6. Entrá al Worker → **Settings** → **Variables and Secrets** → **Add**:
@@ -41,7 +41,7 @@ https://JoseMota0190.github.io/space-mission-design/
 7. En **Settings → Bindings → Add → KV Namespace**:
    - Nombre de la variable: **`RANKS`**
    - Namespace: **`ranking-misiones`**
-8. Copiá la **URL del Worker** (algo como `https://mision-espacial.usuario.workers.dev`).
+8. Copiá la **URL del Worker** (algo como `https://space-mission-design.usuario.workers.dev`).
 
 ---
 
@@ -50,7 +50,7 @@ https://JoseMota0190.github.io/space-mission-design/
 Con la URL del Worker, se pega en `index.html`:
 
 ```js
-const CFG={WORKER:"https://mision-espacial.<usuario>.workers.dev"};
+const CFG={WORKER:"https://space-mission-design.<usuario>.workers.dev"};
 ```
 
 Se sube el cambio y los tres modos quedan completos: jugar solo, **ranking compartido**
