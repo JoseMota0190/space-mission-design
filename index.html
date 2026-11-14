@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diseña tu misión espacial</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9eff6;--panel:#f8fbfe;--ink:#10294a;--mut:#4a6283;--line:#b4c6dc;--ok:#0b7a5a;--warn:#c2410c;--acc:#1d5fb4;--grid:rgba(29,95,180,.09);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e2441;--panel:#133058;--ink:#e6eefb;--mut:#9fb6d6;--line:#2c4f80;--ok:#4cd1a1;--warn:#ff9a62;--acc:#7db4ff;--grid:rgba(125,180,255,.08)}}
+:root[data-theme="dark"]{--bg:#0e2441;--panel:#133058;--ink:#e6eefb;--mut:#9fb6d6;--line:#2c4f80;--ok:#4cd1a1;--warn:#ff9a62;--acc:#7db4ff;--grid:rgba(125,180,255,.08)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font:400 16px/1.45 "Barlow Semi Condensed",system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1;margin:8px 0 6px;font-weight:700;letter-spacing:-.01em}
+.lead{color:var(--mut);max-width:60ch;margin:0 0 20px;font-size:1.1rem}
+.grid{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:start}
+@media(max-width:820px){.grid{grid-template-columns:1fr}}
+fieldset{border:1.5px solid var(--line);background:var(--panel);margin:0 0 14px;padding:12px 14px 14px;border-radius:4px;min-width:0}
+legend{font-weight:700;font-size:1.15rem;padding:0 6px}
+.why{margin:0 0 10px;color:var(--mut);font-size:.95rem}
+label.o{display:flex;gap:10px;align-items:flex-start;padding:8px 6px;border-top:1px dashed var(--line);cursor:pointer}
+label.o:first-of-type{border-top:0}
+label.o input{margin-top:5px;accent-color:var(--acc)}
+label.o b{font-weight:600}
+label.o small{display:block;color:var(--mut)}
+.sl{display:flex;align-items:center;gap:12px;margin:6px 0}
+.sl span{min-width:140px}
+.sl input{flex:1;accent-color:var(--acc)}
+.hud{position:sticky;top:10px;border:1.5px solid var(--ink);background:var(--panel);padding:14px;border-radius:4px}
+.hud h2{margin:0 0 10px;font-size:1.25rem}
+.bar{margin:0 0 12px}
+.bar div.t{display:flex;justify-content:space-between;font-size:.95rem}
+.bar .tr{height:10px;border:1px solid var(--line);margin-top:3px;background:transparent}
+.bar .fl{height:100%;background:var(--acc)}
+.bar.bad .fl{background:var(--warn)}.bar.bad .v{color:var(--warn);font-weight:700}
+.al{margin:8px 0 12px;padding:0;list-style:none;font-size:.95rem}
+.al li{padding:4px 0 4px 10px;border-left:3px solid var(--warn);margin-bottom:4px}
+.al li.g{border-color:var(--ok)}
+button{font:700 1.1rem "Barlow Semi Condensed",system-ui,sans-serif;background:var(--ink);color:var(--bg);border:0;padding:12px 18px;width:100%;border-radius:3px;cursor:pointer}
+button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+#rep{margin-top:18px}
+.rep{border:2px solid var(--ink);background:var(--panel);padding:16px;border-radius:4px}
+.rep h2{margin:0;font-size:1.8rem}.rep.ok h2{color:var(--ok)}.rep.no h2{color:var(--warn)}
+.sc{font-size:3rem;font-weight:700;line-height:1;margin:6px 0}
+.rep h3{margin:14px 0 4px;font-size:1.05rem}
+.rep ul{margin:0;padding-left:20px}.rep li{margin-bottom:4px}
+.foot{margin-top:24px;color:var(--mut);font-size:.9rem}
+@media (prefers-reduced-motion:no-preference){.bar .fl{transition:width .25s}}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}.tabs button{width:auto;background:transparent;color:var(--ink);border:1.5px solid var(--ink);padding:8px 14px;font-size:1rem}.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+#rvw{display:block;margin:0 0 10px}#rvw[hidden]{display:none}
+select,input[type=text]{font:inherit;padding:8px;border:1.5px solid var(--line);background:var(--panel);color:var(--ink);border-radius:3px;max-width:100%}
+.duel{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:820px){.duel{grid-template-columns:1fr}}
+#lb{margin-top:18px}table{border-collapse:collapse;width:100%;max-width:480px}td{border-bottom:1px solid var(--line);padding:6px 8px}td:last-child{text-align:right;font-weight:700}
+#pub{width:auto;margin-left:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Diseña tu misión espacial</h1>
+<p class="lead">Elige un objetivo, arma la nave y lánzala. Cada decisión cambia la masa, la energía, los datos y el costo. Rara vez hay una sola solución buena.</p>
+<div class="tabs" id="tabs"><button data-m="solo" aria-pressed="true">Jugar solo</button><button data-m="rank" aria-pressed="false">Ranking diario</button><button data-m="duel" aria-pressed="false">Duelo contra IA</button></div>
+<div class="grid">
+<div id="cfg"></div>
+<aside class="hud" aria-live="polite">
+<h2>Panel de control</h2>
+<div id="bars"></div>
+<ul class="al" id="al"></ul>
+<label id="rvw" hidden>Rival <select id="rv"></select></label>
+<button id="go">Lanzar misión</button>
+</aside>
+</div>
+<div id="rep"></div><div id="lb"></div>
+<p class="foot">Valores simplificados con fines educativos. No son datos oficiales de ninguna misión real.</p>
+</div>
+<script>
+const CFG={WORKER:""}; // pega aquí la URL de tu Worker de Cloudflare (ej: https://mi-worker.xxxx.workers.dev)
+const SC=[
+{n:"Vigilante de incendios",d:"Detectar incendios forestales desde el espacio.",b:150,r:45,w:[1,1,.6,0,.2],f:[.8,1,.5,.05]},
+{n:"Hielo en la Luna",d:"Buscar hielo de agua cerca del polo sur lunar.",b:200,r:50,w:[.7,.4,1,.3,1],f:[.05,.05,.1,1]},
+{n:"Centinela de tormentas solares",d:"Medir el viento solar antes de que llegue a la Tierra.",b:160,r:35,w:[.3,0,.8,1,0],f:[.4,.3,1,.2]}];
+const LV=[
+{n:"Cohete pequeño",c:20,k:.10,cap:[400,300,0,0],d:"Barato, pero lleva poco y solo a órbitas cercanas."},
+{n:"Cohete mediano",c:60,k:.05,cap:[2000,1500,600,500],d:"Llega a la Luna y a órbita geoestacionaria."},
+{n:"Cohete pesado",c:150,k:.03,cap:[8000,6000,3500,2500],d:"Lleva mucho a todas partes, pero consume tu presupuesto."}];
+const OR=[
+{n:"Órbita baja (400 km)",sun:.6,ct:.08,d:"Fácil de alcanzar, con eclipses frecuentes y contacto breve con tierra."},
+{n:"Heliosíncrona (700 km)",sun:.8,ct:.12,d:"Casi siempre con luz solar. Ideal para observar la Tierra."},
+{n:"Geoestacionaria (36 000 km)",sun:.98,ct:1,d:"Contacto continuo con tierra, pero llegar cuesta mucho."},
+{n:"Órbita lunar",sun:.85,ct:.35,d:"Lejos de casa: te comunicas aproximadamente un tercio del tiempo."}];
+const IN=[
+{n:"Cámara óptica",m:40,p:60,c:25,d:30,s:25},
+{n:"Radiómetro térmico",m:70,p:120,c:40,d:50,s:30},
+{n:"Espectrómetro",m:30,p:40,c:30,d:10,s:25},
+{n:"Magnetómetro",m:5,p:5,c:8,d:1,s:20},
+{n:"Altímetro láser",m:55,p:90,c:45,d:20,s:30}];
+const AN=[
+{n:"Antena baja (2 Mbps)",m:3,p:10,c:2,r:2},
+{n:"Antena media (20 Mbps)",m:10,p:30,c:6,r:20},
+{n:"Antena alta (100 Mbps)",m:25,p:80,c:15,r:100}];
+const S={sc:0,lv:1,or:1,ins:[0],an:1,area:3,bat:1,yrs:3};
+const $=s=>document.querySelector(s),R=()=>Math.random(),pct=x=>Math.round(x*100);
+
+function radios(name,arr,fn){return arr.map((o,i)=>`<label class="o"><input type="radio" name="${name}" value="${i}" ${S[name]===i?"checked":""}><span><b>${o.n}</b><small>${fn(o)}</small></span></label>`).join("")}
+function build(){
+$("#cfg").innerHTML=`
+<fieldset><legend>1. Objetivo</legend><p class="why">Define qué necesitas lograr y cuánto puedes gastar.</p>${radios("sc",SC,o=>`${o.d} Presupuesto: ${o.b} M$. Ciencia mínima: ${o.r}.`)}</fieldset>
+<fieldset><legend>2. Cohete</legend><p class="why">Cada cohete lleva una masa máxima según la órbita. Más capacidad significa más costo.</p>${radios("lv",LV,o=>`${o.d} Costo: ${o.c} M$.`)}</fieldset>
+<fieldset><legend>3. Órbita</legend><p class="why">Cambia la luz solar disponible, el tiempo de contacto con tierra y qué tan útil es la vista para tu objetivo.</p>${radios("or",OR,o=>o.d)}</fieldset>
+<fieldset><legend>4. Instrumentos</legend><p class="why">Más instrumentos dan más ciencia, pero suman masa, energía, datos y costo.</p>${IN.map((o,i)=>`<label class="o"><input type="checkbox" value="${i}" ${S.ins.includes(i)?"checked":""}><span><b>${o.n}</b><small>${o.m} kg · ${o.p} W · ${o.c} M$ · ${o.d} GB/día</small></span></label>`).join("")}</fieldset>
+<fieldset><legend>5. Comunicaciones</legend><p class="why">Si generas más datos de los que puedes enviar, se pierden.</p>${radios("an",AN,o=>`${o.m} kg · ${o.p} W · ${o.c} M$`)}</fieldset>
+<fieldset><legend>6. Energía y duración</legend><p class="why">Los paneles dan energía pero pesan. Las baterías cubren los eclipses.</p>
+<div class="sl"><span>Paneles: <b id="v-area"></b> m²</span><input type="range" id="area" min="0.5" max="12" step="0.5" aria-label="Área de paneles"></div>
+<div class="sl"><span>Baterías: <b id="v-bat"></b></span><input type="range" id="bat" min="0" max="3" step="1" aria-label="Baterías"></div>
+<div class="sl"><span>Duración: <b id="v-yrs"></b> años</span><input type="range" id="yrs" min="1" max="5" step="1" aria-label="Duración en años"></div></fieldset>`;
+$("#area").value=S.area;$("#bat").value=S.bat;$("#yrs").value=S.yrs}
+
+function calc(){
+const sc=SC[S.sc],lv=LV[S.lv],or=OR[S.or],an=AN[S.an],I=S.ins.map(i=>IN[i]);
+const sum=k=>I.reduce((a,o)=>a+o[k],0);
+const pay=sum("m")+an.m+S.area*8+S.bat*10,mass=pay+60+.25*pay;
+const need=80+sum("p")+an.p,use=S.area*120*Math.min(1,or.sun+.12*S.bat);
+const cost=sum("c")+an.c+S.area*1.5+S.bat*3+10+lv.c+3*S.yrs;
+const gen=sum("d"),dl=an.r*or.ct*10.8;
+const raw=S.ins.reduce((a,i)=>a+IN[i].s*sc.w[i],0);
+const pf=Math.min(1,use/need),df=gen?Math.min(1,dl/gen):1,fit=sc.f[S.or],dur=.7+.15*S.yrs;
+return{sc,lv,or,an,cost,mass,cap:lv.cap[S.or],need,use,gen,dl,raw,pf,df,fit,dur,sci:raw*pf*df*fit*dur,req:sc.r,bud:sc.b}}
+
+function bar(l,v,max,txt,bad){return `<div class="bar ${bad?"bad":""}"><div class="t"><span>${l}</span><span class="v">${txt}</span></div><div class="tr"><div class="fl" style="width:${Math.min(100,v/max*100)}%"></div></div></div>`}
+function hud(){
+const m=calc(),al=[];
+$("#v-area").textContent=S.area;$("#v-bat").textContent=S.bat;$("#v-yrs").textContent=S.yrs;
+$("#bars").innerHTML=
+bar("Presupuesto",m.cost,m.bud,`${m.cost.toFixed(0)} / ${m.bud} M$`,m.cost>m.bud)+
+bar("Masa",m.mass,m.cap||1,`${m.mass.toFixed(0)} / ${m.cap} kg`,m.mass>m.cap)+
+bar("Energía necesaria",m.need,Math.max(m.use,1),`${m.need.toFixed(0)} / ${m.use.toFixed(0)} W`,m.need>m.use)+
+bar("Datos generados",m.gen,Math.max(m.dl,1),`${m.gen} / ${m.dl.toFixed(1)} GB por día`,m.gen>m.dl)+
+bar("Ciencia estimada",m.sci,m.req,`${m.sci.toFixed(0)} / ${m.req} mínima`,m.sci<m.req);
+if(m.cost>m.bud)al.push("Te pasas del presupuesto. Quita algo antes de lanzar.");
+if(m.mass>m.cap)al.push(m.cap?"La nave pesa más de lo que el cohete puede llevar a esa órbita.":"Ese cohete no llega a esa órbita.");
+if(m.pf<1)al.push("Falta energía: los instrumentos trabajarán al "+pct(m.pf)+"%.");
+if(m.df<1)al.push("Sobran datos: perderás el "+pct(1-m.df)+" por falta de ancho de banda.");
+if(m.fit<.6)al.push("Esa órbita sirve poco para este objetivo ("+pct(m.fit)+"% de utilidad).");
+if(!S.ins.length)al.push("Elige al menos un instrumento.");
+if(!al.length)al.push("");
+$("#al").innerHTML=al[0]?al.map(t=>`<li>${t}</li>`).join(""):`<li class="g">Diseño consistente. Puedes lanzar.</li>`;
+$("#go").disabled=m.cost>m.bud||!S.ins.length}
+
+function run(seed){const R=rng(seed);
+const m=calc(),log=[],why=[];let sci=m.sci,fail=false;
+if(m.cost>m.bud||!S.ins.length)return{score:0,ok:false,fail:true,sci:0,log:["Diseño inválido: presupuesto excedido o sin instrumentos."],why:[],m};
+if(m.mass>m.cap){fail=true;log.push(m.cap?`La nave pesa ${m.mass.toFixed(0)} kg y el cohete solo lleva ${m.cap} kg a esa órbita. No llegó.`:`El ${m.lv.n.toLowerCase()} no puede alcanzar esa órbita.`)}
+else if(R()<m.lv.k){fail=true;log.push(`Falla de lanzamiento (riesgo de ${pct(m.lv.k)}% en este cohete). Es azar: puedes reintentar.`)}
+if(fail)sci=0;else{
+log.push("Lanzamiento y despliegue correctos.");
+for(let y=1;y<=S.yrs;y++){if(R()>.35)continue;const e=Math.floor(R()*3);
+if(e===0){if(m.use/m.need<1.25||S.bat===0){sci*=.85;log.push(`Año ${y}: llamarada solar. Tu margen de energía era corto y perdiste el 15% de la ciencia.`)}else log.push(`Año ${y}: llamarada solar. Tu margen de energía y tus baterías la absorbieron.`)}
+else if(e===1){if(S.an===0){sci*=.9;log.push(`Año ${y}: falla de una estación terrestre. Con antena baja no pudiste recuperar datos: perdiste el 10%.`)}else log.push(`Año ${y}: falla de una estación terrestre. Tu antena recuperó los datos después.`)}
+else{sci*=.92;log.push(`Año ${y}: impacto de micrometeoroide. Perdiste el 8% de la ciencia. Las naves reales suman redundancia para esto.`)}}}
+const ok=!fail&&sci>=m.req,left=Math.max(0,(m.bud-m.cost)/m.bud),mg=Math.min(1,Math.max(0,(m.use/m.need-1)/.3));
+const score=fail?Math.round(left*10):Math.round(Math.min(1,sci/m.req)*50+(ok?10:0)+Math.min(1,left)*15+mg*10+m.fit*15);
+if(m.pf<1)why.push(`Energía insuficiente: los instrumentos funcionaron al ${pct(m.pf)}%. Añade paneles o quita instrumentos.`);
+if(m.df<1)why.push(`Cuello de botella de datos: se perdió el ${pct(1-m.df)}%. Usa una antena mejor o genera menos datos.`);
+if(m.fit<1)why.push(`La órbita rinde el ${pct(m.fit)}% para este objetivo. Compara otras órbitas.`);
+if(left>.3)why.push("Te sobró más del 30% del presupuesto: quizá podías pagar más ciencia.");
+if(m.use/m.need<1.1&&m.pf>=1)why.push("Tu margen de energía es muy justo y cualquier problema te afecta.");
+if(!why.length)why.push("Diseño equilibrado: no se ve un cuello de botella claro.");
+return{score,ok,fail,sci,log,why,m}}
+
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),esc=s=>String(s).replace(/[&<>"']/g,c=>"&#"+c.charCodeAt(0)+";");
+const rng=a=>()=>{a|=0;a=a+1831565813|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const DAY=+new Date().toISOString().slice(0,10).replace(/-/g,"");
+function clean(d){const g=(v,n)=>Number.isInteger(+v)&&+v>=0&&+v<n?+v:0;
+return{sc:g(d.sc,3),lv:g(d.lv,3),or:g(d.or,4),an:g(d.an,3),ins:[...new Set((Array.isArray(d.ins)?d.ins:[]).map(Number).filter(i=>Number.isInteger(i)&&i>=0&&i<5))],area:clamp(Math.round((+d.area||1)*2)/2,.5,12),bat:clamp(Math.round(+d.bat||0),0,3),yrs:clamp(Math.round(+d.yrs||1),1,5)}}
+const withD=(d,f)=>{const o={...S};Object.assign(S,d);try{return f()}finally{Object.assign(S,o)}};
+const ev=(d,seed)=>withD(clean(d),()=>run(seed));
+let mode="solo",last=null;
+const seedNow=()=>mode==="solo"?Date.now()%1e9:DAY*10+S.sc;
+const designTxt=d=>`${LV[d.lv].n}, ${OR[d.or].n}, ${d.ins.map(i=>IN[i].n).join(" + ")}, ${AN[d.an].n}, ${d.area} m², ${d.bat} baterías, ${d.yrs} años`;
+function card(r,pre){const base=r.ok?"Misión cumplida":r.fail?"Misión perdida":"Misión incompleta";
+return `<div class="rep ${r.ok?"ok":"no"}"><h2>${pre?pre+": ":""}${base}</h2><div class="sc">${r.score}/100</div><div>Ciencia: <b>${r.sci.toFixed(0)}</b> de ${r.m.req}. Costo: ${r.m.cost.toFixed(0)} de ${r.m.bud} M$.</div><h3>Qué pasó</h3><ul>${r.log.map(t=>`<li>${t}</li>`).join("")}</ul><h3>Qué mejorar</h3><ul>${r.why.map(t=>`<li>${t}</li>`).join("")}</ul></div>`}
+
+async function launch(){
+if(mode==="duel")return duel();
+last=ev(S,seedNow());
+$("#rep").innerHTML=card(last)+(mode==="rank"?`<p><input id="nm" type="text" maxlength="20" placeholder="Tu nombre" aria-label="Tu nombre"><button id="pub">Publicar en el ranking</button></p>`:"");
+if(mode==="rank")$("#pub").onclick=publish;
+$("#rep").scrollIntoView({behavior:"smooth"})}
+
+const wpost=(o)=>fetch(CFG.WORKER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(o)}).then(r=>r.json());
+const loc=()=>{try{return JSON.parse(localStorage.getItem("runs")||"[]")}catch(e){return[]}};
+async function publish(){const name=$("#nm").value.trim().slice(0,20);if(!name)return;
+const design=clean(S);
+try{if(CFG.WORKER){const r=await wpost({op:"publish",day:DAY,sc:S.sc,name,design});if(r&&r.error)throw new Error(r.error)}else localStorage.setItem("runs",JSON.stringify([...loc(),{day:DAY,sc:S.sc,name,kind:"human",design}]))}catch(e){}
+$("#pub").disabled=true;board()}
+async function board(){let rows=[];
+try{if(CFG.WORKER){const r=await wpost({op:"rank",day:DAY,sc:S.sc});rows=Array.isArray(r.rows)?r.rows:[]}else rows=loc().filter(r=>r.day===DAY&&r.sc===S.sc)}catch(e){}
+const t=rows.map(r=>({n:r.name,s:ev(r.design,DAY*10+S.sc).score})).sort((a,b)=>b.s-a.s).slice(0,15);
+$("#lb").innerHTML=`<h3>Ranking de hoy: ${SC[S.sc].n}</h3>`+(t.length?`<table>${t.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.n)}</td><td>${x.s}</td></tr>`).join("")}</table>`:"<p>Nadie ha publicado todavía. Sé la primera persona.</p>")+(CFG.WORKER?"":`<p class="why">Ranking local: despliega el Worker para compartirlo.</p>`)}
+
+const RIV=[["local","Optimizador local (sin red)"],["groq-gptoss","gpt-oss 120B"],["groq-qwen","Qwen3.8 27B"],["groq-gptoss20","gpt-oss 20B"]];
+const rnd=n=>Math.floor(Math.random()*n);
+function optimize(){let best=null,bs=-1;
+for(let i=0;i<4000;i++){const x=clean({sc:S.sc,lv:rnd(3),or:rnd(4),an:rnd(3),ins:[0,1,2,3,4].filter(()=>Math.random()<.5),area:.5+rnd(24)/2,bat:rnd(4),yrs:1+rnd(5)});
+let t=0;for(let k=1;k<=6;k++)t+=ev(x,k*7919).score;t/=6;if(t>bs){bs=t;best=x}}
+return best}
+const mkPrompt=()=>`Eres ingeniero de misiones. Diseña la mejor misión. Responde SOLO un JSON: {"lv":0-2,"or":0-3,"ins":[índices 0-4],"an":0-2,"area":0.5-12 en pasos de 0.5,"bat":0-3,"yrs":1-5}.
+Objetivo: ${JSON.stringify(SC[S.sc])} (b=presupuesto M$, r=ciencia mínima, w=peso de cada instrumento, f=utilidad de cada órbita).
+Cohetes: ${JSON.stringify(LV)}. Órbitas: ${JSON.stringify(OR)}. Instrumentos: ${JSON.stringify(IN)} (m kg, p W, c M$, d GB/día, s ciencia). Antenas: ${JSON.stringify(AN)} (r Mbps).
+Reglas: carga=instrumentos+antena+8*area+10*bat; masa=carga+60+0.25*carga y debe ser <= cap[órbita] del cohete. Energía disponible=120*area*min(1,sun+0.12*bat) debe ser >= 80+potencia de instrumentos y antena. Datos enviables=r*ct*10.8 GB/día debe ser >= datos generados. Costo=instrumentos+antena+1.5*area+3*bat+10+costo del cohete+3*yrs y debe ser <= presupuesto. Ciencia=suma(s*w)*min(1,energía/necesidad)*min(1,enviables/generados)*f[órbita]*(0.7+0.15*yrs). Gana más puntos quien cumple la ciencia mínima, deja presupuesto sin gastar y mantiene margen de energía.`;
+async function aiDesign(rv){if(rv==="local")return optimize();
+if(!CFG.WORKER)throw 0;
+const k=`ai:${rv}:${DAY}:${S.sc}`;try{const c=localStorage.getItem(k);if(c)return JSON.parse(c)}catch(e){}
+const r=await fetch(CFG.WORKER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({op:"ai",rival:rv,day:DAY,sc:S.sc,prompt:mkPrompt()})});
+const j=await r.json(),d=clean({...JSON.parse(j.text.match(/\{[\s\S]*\}/)[0]),sc:S.sc});
+try{localStorage.setItem(k,JSON.stringify(d))}catch(e){}return d}
+async function duel(){const rv=$("#rv").value,rn=$("#rv").selectedOptions[0].text,seed=seedNow();
+$("#rep").innerHTML="<p>La IA está diseñando su misión…</p>";
+const me=ev(S,seed);let ai=null,d=null,err="";
+try{d=await aiDesign(rv);ai=ev(d,seed)}catch(e){err="No obtuve una respuesta válida de esa IA (límite de uso, red o formato). Prueba otro rival."}
+const v=!ai?err:me.score>ai.score?"Ganaste a "+rn:me.score<ai.score?"Gana "+rn:"Empate";
+$("#rep").innerHTML=`<h2>${esc(v)}</h2><div class="duel">${card(me,"Tú")}${ai?card(ai,rn):""}</div>`+(ai?`<p>Diseño de la IA: ${esc(designTxt(d))}</p>`:"");
+$("#rep").scrollIntoView({behavior:"smooth"})}
+
+$("#rv").innerHTML=RIV.map(r=>`<option value="${r[0]}">${r[1]}</option>`).join("");
+$("#tabs").onclick=e=>{const b=e.target.closest("button");if(!b)return;mode=b.dataset.m;
+document.querySelectorAll("#tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+$("#rvw").hidden=mode!=="duel";$("#go").textContent=mode==="duel"?"Desafiar a la IA":"Lanzar misión";
+$("#lb").innerHTML="";$("#rep").innerHTML="";if(mode==="rank")board()};
+document.addEventListener("change",()=>{if(mode==="rank")board()});
+
+document.addEventListener("change",e=>{const t=e.target;
+if(t.type==="radio")S[t.name]=+t.value;
+else if(t.type==="checkbox"){const i=+t.value;S.ins=t.checked?[...S.ins,i]:S.ins.filter(x=>x!==i)}
+hud()});
+document.addEventListener("input",e=>{const t=e.target;if(t.type==="range"){S[t.id]=+t.value;hud()}});
+$("#go").onclick=launch;
+build();hud();
+</script>
+</body>
+</html>
