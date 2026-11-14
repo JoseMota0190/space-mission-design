@@ -2,9 +2,8 @@ name = "space-mission-design"
 main = "worker.js"
 compatibility_date = "2025-01-01"
 
-# El ranking se guarda en una caja KV (namespace) llamada aqui "RANKS".
-# El id lo agrega Cloudflare al crear el namespace y engancharlo al Worker.
-#
-# [[kv_namespaces]]
-# binding = "RANKS"
-# id = "PEGA_AQUI_EL_ID_QUE_TE_DA_CLOUDFLARE"
+# El ranking se guarda en una caja KV (namespace) llamada "ranking-misiones".
+# Enlazada como la variable "RANKS" del Worker.
+[[kv_namespaces]]
+binding = "RANKS"
+id = "8dd56eb97b654e82859d0fd52b8bb343"
